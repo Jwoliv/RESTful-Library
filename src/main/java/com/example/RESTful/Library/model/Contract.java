@@ -10,7 +10,6 @@ import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 @Component
@@ -29,4 +28,5 @@ public class Contract {
     @OneToOne
     private Book book;
     private Boolean isOverdue;
+    private Boolean isReturned;
 }

@@ -30,6 +30,7 @@ public class User extends Person {
     @ManyToMany(mappedBy = "previousOwners", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Book> previousBooks = new ArrayList<>();
-    @OneToOne
-    private Contract contract;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Contract> contracts = new ArrayList<>();
 }
