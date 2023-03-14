@@ -1,4 +1,4 @@
-package com.example.RESTful.Library.dao.book;
+package com.example.RESTful.Library.dao.dao.book;
 
 import com.example.RESTful.Library.dao.dao.AbstractDaoImpl;
 import com.example.RESTful.Library.dao.impl.book.BookDao;

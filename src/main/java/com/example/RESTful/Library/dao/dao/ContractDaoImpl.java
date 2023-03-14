@@ -3,9 +3,13 @@ package com.example.RESTful.Library.dao.dao;
 import com.example.RESTful.Library.dao.impl.ContractDao;
 import com.example.RESTful.Library.model.Contract;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Repository
+@Transactional(readOnly = true)
 public class ContractDaoImpl extends AbstractDaoImpl<Contract> implements ContractDao {
     public ContractDaoImpl(Class<Contract> type, SessionFactory sessionFactory) {
         super(type, sessionFactory);
