@@ -23,13 +23,13 @@ public abstract class AbstractService<T, D extends AbstractDao<T>> {
     public T findById(Long id) {
         return dao.findById(id);
     }
-    void save(T element) {
+    public void save(T element) {
         dao.save(element);
     }
-    void delete(T element) {
+    public void delete(T element) {
         dao.delete(element);
     }
-    void update(T element) {
+    public void update(T element) {
         dao.update(element);
     }
 }
