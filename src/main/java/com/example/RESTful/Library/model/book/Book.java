@@ -3,6 +3,7 @@ package com.example.RESTful.Library.model.book;
 import com.example.RESTful.Library.model.Contract;
 import com.example.RESTful.Library.model.user.Author;
 import com.example.RESTful.Library.model.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class Book {
     @ManyToOne
     private Author author;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JsonIgnore
     private User currentOwner;
     @ManyToMany
     @ToString.Exclude
@@ -38,5 +40,6 @@ public class Book {
     @ManyToOne
     private Theme theme;
     @OneToOne
+    @JsonIgnore
     private Contract contract;
 }

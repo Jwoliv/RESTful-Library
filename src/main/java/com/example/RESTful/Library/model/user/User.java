@@ -24,6 +24,7 @@ public class User extends Person {
     @Email
     private String email;
     private String numberPhone;
+    private Integer numberOfOverdue;
     @OneToMany(mappedBy = "currentOwner", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @ToString.Exclude
     private List<Book> currentTakenBook = new ArrayList<>();
