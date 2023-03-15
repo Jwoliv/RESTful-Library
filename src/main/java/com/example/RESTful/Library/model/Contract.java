@@ -21,11 +21,14 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(name = "date_of_take")
     private LocalDate dateOfTake;
+    @Column(name = "date_of_return")
     private LocalDate dateOfReturn;
     @ManyToOne
     private User user;
     @OneToOne
     private Book book;
+    @Column(name = "is_returned")
     private Boolean isReturned;
 }

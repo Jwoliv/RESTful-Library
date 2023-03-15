@@ -1,6 +1,7 @@
 package com.example.RESTful.Library.model.user;
 
 import com.example.RESTful.Library.model.book.Book;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -23,4 +24,9 @@ public class Author extends Person {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Book> books = new ArrayList<>();
+
+    @JsonIgnore
+    public List<Book> getBooks() {
+        return books;
+    }
 }

@@ -48,7 +48,6 @@ public class ContractsController extends AbstractController<Contract, ContractDa
         return ResponseEntity.ok(service.findAll());
     }
 
-
     public void removeContractAfterReturned(Long id) {
         Contract contract = service.findById(id);
         if (contract != null && service.findById(id) != null) {
@@ -80,7 +79,15 @@ public class ContractsController extends AbstractController<Contract, ContractDa
     }
     public void setFieldsForBorrow(Contract contract) {
         Book book = contract.getBook();
+        updateBookFieldsOnBorrow(contract, book);
+        updateContractFieldsOnBorrow(contract, book);
+    }
+    public void updateBookFieldsOnBorrow(Contract contract, Book book) {
         book.setIsTaken(true);
+        book.setCurrentOwner(contract.getUser());
+        bookService.update(book);
+    }
+    public void updateContractFieldsOnBorrow(Contract contract, Book book) {
         contract.setBook(book);
         contract.setDateOfTake(LocalDate.now());
         contract.setDateOfReturn(LocalDate.now().plusWeeks(2));

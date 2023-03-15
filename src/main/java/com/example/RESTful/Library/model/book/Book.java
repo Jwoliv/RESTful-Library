@@ -3,7 +3,6 @@ package com.example.RESTful.Library.model.book;
 import com.example.RESTful.Library.model.Contract;
 import com.example.RESTful.Library.model.user.Author;
 import com.example.RESTful.Library.model.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,11 +25,14 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    @Column(name = "is_taken")
     private Boolean isTaken;
+    @Column(name = "date_of_create")
     private LocalDate dateOfCreate;
     private Float rating;
     @ManyToOne
     private Author author;
+    @JoinColumn(name = "current_owner")
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private User currentOwner;
     @ManyToMany
@@ -38,11 +40,6 @@ public class Book {
     private List<User> previousOwners = new ArrayList<>();
     @ManyToOne
     private Theme theme;
-    @OneToOne
+    @OneToOne(mappedBy = "book")
     private Contract contract;
-
-    @JsonIgnore
-    public Author getAuthor() {
-        return author;
-    }
 }
