@@ -2,6 +2,7 @@ package com.example.RESTful.Library.model.user;
 
 import com.example.RESTful.Library.model.Contract;
 import com.example.RESTful.Library.model.book.Book;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.EqualsAndHashCode;
@@ -34,4 +35,9 @@ public class User extends Person {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Contract> contracts = new ArrayList<>();
+
+    @JsonIgnore
+    public List<Contract> getContracts() {
+        return contracts;
+    }
 }

@@ -43,9 +43,7 @@ public class ContractsController extends AbstractController<Contract, ContractDa
         return ResponseEntity.ok(service.findById(id).getUser());
     }
     @PatchMapping("/{id}/return-book")
-    public ResponseEntity<List<Contract>> returnBook(
-            @PathVariable Long id
-    ) {
+    public ResponseEntity<List<Contract>> returnBook(@PathVariable Long id) {
         removeContractAfterReturned(id);
         return ResponseEntity.ok(service.findAll());
     }

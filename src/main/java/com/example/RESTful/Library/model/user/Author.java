@@ -1,7 +1,9 @@
 package com.example.RESTful.Library.model.user;
 
 import com.example.RESTful.Library.model.book.Book;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

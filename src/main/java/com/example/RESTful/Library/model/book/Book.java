@@ -32,7 +32,6 @@ public class Book {
     @ManyToOne
     private Author author;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    @JsonIgnore
     private User currentOwner;
     @ManyToMany
     @ToString.Exclude
@@ -40,6 +39,10 @@ public class Book {
     @ManyToOne
     private Theme theme;
     @OneToOne
-    @JsonIgnore
     private Contract contract;
+
+    @JsonIgnore
+    public Author getAuthor() {
+        return author;
+    }
 }

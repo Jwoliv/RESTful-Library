@@ -1,5 +1,6 @@
 package com.example.RESTful.Library.model.book;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,4 +25,9 @@ public class Theme {
     @OneToMany(mappedBy = "theme", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Book> books = new ArrayList<>();
+
+    @JsonIgnore
+    public List<Book> getBooks() {
+        return books;
+    }
 }
