@@ -45,4 +45,12 @@ public class User extends Person {
     public List<Contract> getContracts() {
         return contracts;
     }
+    @JsonIgnore
+    public List<Book> getPreviousBooks() {
+        return previousBooks;
+    }
+    @JsonIgnore
+    public List<Book> getCurrentTakenBook() {
+        return currentTakenBook;
+    }
 }

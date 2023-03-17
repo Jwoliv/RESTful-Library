@@ -34,20 +34,31 @@ public class ContractsController extends AbstractController<Contract, ContractDa
         createContract(contract);
         return ResponseEntity.ok(contract.getId() != null ? contract : null);
     }
-    @GetMapping("/{id}/book")
-    public ResponseEntity<Book> bookOfTheContract(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id).getBook());
-    }
-    @GetMapping("/{id}/user")
-    public ResponseEntity<User> userOfTheContract(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id).getUser());
-    }
     @PatchMapping("/{id}/return-book")
     public ResponseEntity<List<Contract>> returnBook(@PathVariable Long id) {
         removeContractAfterReturned(id);
         return ResponseEntity.ok(service.findAll());
     }
-
+    @PatchMapping("/{id}/extend-term")
+    public ResponseEntity<Contract> extendTermOfContract(@PathVariable Long id) {
+        extendDateOfReturn(id);
+        return ResponseEntity.ok(service.findById(id));
+    }
+    @Override
+    public ResponseEntity<List<Contract>> deleteElement(Long id) {
+        Contract contract = service.findById(id);
+        if (contract != null && !contract.getBook().getIsTaken() && contract.getIsReturned()) {
+            service.delete(contract);
+        }
+        return ResponseEntity.ok(service.findAll());
+    }
+    public void extendDateOfReturn(Long id) {
+        Contract contract = service.findById(id);
+        if (contract != null) {
+            contract.setDateOfReturn(contract.getDateOfReturn().plusWeeks(2));
+            service.update(contract);
+        }
+    }
     public void removeContractAfterReturned(Long id) {
         Contract contract = service.findById(id);
         if (contract != null && service.findById(id) != null) {
@@ -57,16 +68,18 @@ public class ContractsController extends AbstractController<Contract, ContractDa
         }
     }
     public void createContract(Contract contract) {
-        if (!contract.getBook().getIsTaken()) {
+        if (contract != null && !contract.getBook().getIsTaken() && contract.getBook().getIsAvailiable()) {
             setFieldsForBorrow(contract);
         }
     }
     public void updateUserIfHeOverdueTheBook(Contract contract) {
-        int resultOfCompareDates = contract.getDateOfReturn().compareTo(LocalDate.now());
-        User user = contract.getUser();
-        if (resultOfCompareDates > 0 && user != null) {
-            user.setNumberOfOverdue(user.getNumberOfOverdue() + 1);
-            userService.update(user);
+        if (contract != null) {
+            int resultOfCompareDates = contract.getDateOfReturn().compareTo(LocalDate.now());
+            User user = contract.getUser();
+            if (resultOfCompareDates > 0 && user != null) {
+                user.setNumberOfOverdue(user.getNumberOfOverdue() + 1);
+                userService.update(user);
+            }
         }
     }
     public void updateBookAfterReturnContract(Book book) {
@@ -78,20 +91,26 @@ public class ContractsController extends AbstractController<Contract, ContractDa
         }
     }
     public void setFieldsForBorrow(Contract contract) {
-        Book book = contract.getBook();
-        updateBookFieldsOnBorrow(contract, book);
-        updateContractFieldsOnBorrow(contract, book);
+        if (contract != null) {
+            Book book = contract.getBook();
+            updateBookFieldsOnBorrow(contract, book);
+            updateContractFieldsOnBorrow(contract, book);
+        }
     }
     public void updateBookFieldsOnBorrow(Contract contract, Book book) {
-        book.setIsTaken(true);
-        book.setCurrentOwner(contract.getUser());
-        bookService.update(book);
+        if (contract != null && book != null) {
+            book.setIsTaken(true);
+            book.setCurrentOwner(contract.getUser());
+            bookService.update(book);
+        }
     }
     public void updateContractFieldsOnBorrow(Contract contract, Book book) {
-        contract.setBook(book);
-        contract.setDateOfTake(LocalDate.now());
-        contract.setDateOfReturn(LocalDate.now().plusWeeks(2));
-        contract.setIsReturned(false);
-        service.save(contract);
+        if (contract != null && book != null) {
+            contract.setBook(book);
+            contract.setDateOfTake(LocalDate.now());
+            contract.setDateOfReturn(LocalDate.now().plusWeeks(2));
+            contract.setIsReturned(false);
+            service.save(contract);
+        }
     }
 }

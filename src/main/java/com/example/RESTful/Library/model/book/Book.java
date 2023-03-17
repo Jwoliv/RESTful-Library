@@ -3,6 +3,7 @@ package com.example.RESTful.Library.model.book;
 import com.example.RESTful.Library.model.Contract;
 import com.example.RESTful.Library.model.user.Author;
 import com.example.RESTful.Library.model.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,6 +30,8 @@ public class Book {
     private Boolean isTaken;
     @Column(name = "date_of_create")
     private LocalDate dateOfCreate;
+    @Column(name = "is_availiable")
+    private Boolean isAvailiable;
     private Float rating;
     @ManyToOne
     private Author author;
@@ -42,4 +45,9 @@ public class Book {
     private Theme theme;
     @OneToOne(mappedBy = "book")
     private Contract contract;
+
+    @JsonIgnore
+    public Contract getContract() {
+        return contract;
+    }
 }
