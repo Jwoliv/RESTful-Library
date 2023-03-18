@@ -22,4 +22,12 @@ public class BookService extends AbstractService<Book, BookDaoImpl> {
     public List<Book> findByIsTaken(Boolean isTaken) {
         return getDao().findByIsTaken(isTaken);
     }
+    public void updateBookAfterReturnContract(Book book) {
+        if (book != null) {
+            book.getPreviousOwners().add(book.getCurrentOwner());
+            book.setCurrentOwner(null);
+            book.setIsTaken(false);
+            update(book);
+        }
+    }
 }

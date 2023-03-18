@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -16,12 +17,23 @@ public class ContractDaoImpl extends AbstractDaoImpl<Contract> implements Contra
     }
 
     @Override
-    public List<Contract> findIsOverdue(Boolean isOverdue) {
+    public List<Contract> findIsOverdue() {
         return getSession().createQuery(
-                        "SELECT C FROM Contract AS C WHERE C.isOverdue = :isOverdue",
+                        "SELECT C FROM Contract AS C WHERE C.dateOfReturn < :dateOfReturn",
                         Contract.class
                 )
-                .setParameter("isOverdue", isOverdue).getResultList();
+                .setParameter("dateOfReturn", LocalDate.now()).getResultList();
+    }
+
+    @Override
+    public List<Contract> findIsOverdueByUserId(Long userId) {
+        return getSession().createQuery(
+                        "SELECT C FROM Contract AS C WHERE C.dateOfReturn < :dateOfReturn AND C.user.id = :id",
+                        Contract.class
+                )
+                .setParameter("dateOfReturn", LocalDate.now())
+                .setParameter("id", userId)
+                .getResultList();
     }
 
     @Override
