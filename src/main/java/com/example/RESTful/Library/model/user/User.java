@@ -26,6 +26,8 @@ public class User extends Person {
     private String email;
     @Column(name = "number_phone")
     private String numberPhone;
+    @Column(name = "is_banned")
+    private Boolean isBanned;
     @Column(name = "number_of_overude")
     private Integer numberOfOverdue;
     @OneToMany(mappedBy = "currentOwner", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})

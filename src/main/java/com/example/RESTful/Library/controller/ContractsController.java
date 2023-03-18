@@ -8,6 +8,7 @@ import com.example.RESTful.Library.service.ContractService;
 import com.example.RESTful.Library.service.book.BookService;
 import com.example.RESTful.Library.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,8 +32,19 @@ public class ContractsController extends AbstractController<Contract, ContractDa
     }
     @Override
     public ResponseEntity<Contract> saveElement(@RequestBody Contract contract) {
-        createContract(contract);
-        return ResponseEntity.ok(contract.getId() != null ? contract : null);
+        if (!contract.getUser().getIsBanned()) {
+            createContract(contract);
+            return ResponseEntity.ok(contract.getId() != null ? contract : null);
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+    @Override
+    public ResponseEntity<List<Contract>> deleteElement(Long id) {
+        Contract contract = service.findById(id);
+        if (contract != null && !contract.getBook().getIsTaken() && contract.getIsReturned()) {
+            service.delete(contract);
+        }
+        return ResponseEntity.ok(service.findAll());
     }
     @PatchMapping("/{id}/return-book")
     public ResponseEntity<List<Contract>> returnBook(@PathVariable Long id) {
@@ -44,11 +56,11 @@ public class ContractsController extends AbstractController<Contract, ContractDa
         extendDateOfReturn(id);
         return ResponseEntity.ok(service.findById(id));
     }
-    @Override
-    public ResponseEntity<List<Contract>> deleteElement(Long id) {
+    @PatchMapping("/{id}/lost-book")
+    public ResponseEntity<List<Contract>> lostBookOfContract(@PathVariable Long id) {
         Contract contract = service.findById(id);
-        if (contract != null && !contract.getBook().getIsTaken() && contract.getIsReturned()) {
-            service.delete(contract);
+        if (contract != null && checkDateOfReturned(contract)) {
+            removeBookAndContractAfterLost(contract);
         }
         return ResponseEntity.ok(service.findAll());
     }
@@ -93,8 +105,10 @@ public class ContractsController extends AbstractController<Contract, ContractDa
     public void setFieldsForBorrow(Contract contract) {
         if (contract != null) {
             Book book = contract.getBook();
-            updateBookFieldsOnBorrow(contract, book);
-            updateContractFieldsOnBorrow(contract, book);
+            if (book != null) {
+                updateBookFieldsOnBorrow(contract, book);
+                updateContractFieldsOnBorrow(contract, book);
+            }
         }
     }
     public void updateBookFieldsOnBorrow(Contract contract, Book book) {
@@ -111,6 +125,25 @@ public class ContractsController extends AbstractController<Contract, ContractDa
             contract.setDateOfReturn(LocalDate.now().plusWeeks(2));
             contract.setIsReturned(false);
             service.save(contract);
+        }
+    }
+    public boolean checkDateOfReturned(Contract contract) {
+        if (contract != null) {
+            LocalDate maxDateOfReturned = contract.getDateOfReturn().plusMonths(2);
+            return !maxDateOfReturned.isBefore(contract.getDateOfReturn());
+        }
+        return false;
+    }
+    public void removeBookAndContractAfterLost(Contract contract) {
+        if (contract != null) {
+            Book book = contract.getBook();
+            User user = contract.getUser();
+            if (user != null && book != null) {
+                user.setIsBanned(true);
+                userService.update(user);
+                service.delete(contract);
+                bookService.delete(book);
+            }
         }
     }
 }
