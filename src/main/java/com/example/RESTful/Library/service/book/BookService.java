@@ -12,12 +12,11 @@ public class BookService extends AbstractService<Book, BookDaoImpl> {
     protected BookService(BookDaoImpl dao) {
         super(dao);
     }
-
-    public List<Book> findByAuthorId(Long authorId) {
-        return getDao().findByAuthorId(authorId);
-    }
-    public List<Book> findByThemeId(Long themeId) {
-        return getDao().findByThemeId(themeId);
+    @Override
+    public void delete(Book book) {
+        if (book != null && book.getContract() == null && book.getPreviousOwners().isEmpty()) {
+            getDao().delete(book);
+        }
     }
     public List<Book> findByIsTaken(Boolean isTaken) {
         return getDao().findByIsTaken(isTaken);

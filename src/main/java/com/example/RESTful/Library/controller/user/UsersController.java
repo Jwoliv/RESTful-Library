@@ -8,10 +8,7 @@ import com.example.RESTful.Library.model.user.User;
 import com.example.RESTful.Library.service.ContractService;
 import com.example.RESTful.Library.service.user.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +19,18 @@ public class UsersController extends AbstractController<User, UserDaoImpl, UserS
     protected UsersController(UserService service, ContractService contractService) {
         super(service);
         this.contractService = contractService;
+    }
+    @GetMapping("/search-by-name")
+    public ResponseEntity<List<User>> searchUsersByName(@RequestParam String name) {
+        return ResponseEntity.ok(service.findByName(name));
+    }
+    @GetMapping("/search-by-email")
+    public ResponseEntity<User> searchUsersByEmail(@RequestParam String email) {
+        return ResponseEntity.ok(service.findByEmail(email));
+    }
+    @GetMapping("/search-by-phone")
+    public ResponseEntity<User> searchUsersByNumberPhone(@RequestParam String numberPhone) {
+        return ResponseEntity.ok(service.findByPhone(numberPhone));
     }
     @GetMapping("/{id}/current-books")
     public ResponseEntity<List<Book>> currentBook(@PathVariable Long id) {
@@ -38,9 +47,7 @@ public class UsersController extends AbstractController<User, UserDaoImpl, UserS
     @Override
     public ResponseEntity<List<User>> deleteElement(Long id) {
         User user = service.findById(id);
-        if (user != null && user.getCurrentTakenBook().isEmpty() && user.getContracts().isEmpty()) {
-            service.delete(user);
-        }
+        service.delete(user);
         return ResponseEntity.ok(service.findAll());
     }
 }

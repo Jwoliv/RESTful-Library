@@ -42,7 +42,9 @@ public class ContractService extends AbstractService<Contract, ContractDaoImpl> 
         }
     }
     public void createContract(Contract contract) {
-        if (contract != null && !contract.getBook().getIsTaken() && contract.getBook().getIsAvailiable()) {
+        if ( contract != null && !contract.getUser().getIsBanned() &&
+                !contract.getBook().getIsTaken() && contract.getBook().getIsAvailiable()
+        ) {
             setFieldsForBorrow(contract);
         }
     }
@@ -78,8 +80,9 @@ public class ContractService extends AbstractService<Contract, ContractDaoImpl> 
         }
         return false;
     }
-    public void removeBookAndContractAfterLost(Contract contract) {
-        if (contract != null) {
+    public void removeBookAndContractAfterLost(Long id) {
+        Contract contract = findById(id);
+        if (contract != null && checkDateOfReturned(contract)) {
             Book book = contract.getBook();
             User user = contract.getUser();
             if (user != null && book != null) {
@@ -88,6 +91,12 @@ public class ContractService extends AbstractService<Contract, ContractDaoImpl> 
                 delete(contract);
                 bookService.delete(book);
             }
+        }
+    }
+    public void checkAvailabilityForDeleteContract(Long id) {
+        Contract contract = findById(id);
+        if (contract != null && !contract.getBook().getIsTaken() && contract.getIsReturned()) {
+            delete(contract);
         }
     }
 }

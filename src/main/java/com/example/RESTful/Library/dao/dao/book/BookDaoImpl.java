@@ -17,22 +17,6 @@ public class BookDaoImpl extends AbstractDaoImpl<Book> implements BookDao {
     }
 
     @Override
-    public List<Book> findByAuthorId(Long id) {
-        return getSession().createQuery(
-                "SELECT B FROM Book AS B WHERE B.author.id = :authorId",
-                Book.class
-        ).setParameter("authorId", id).getResultList();
-    }
-
-    @Override
-    public List<Book> findByThemeId(Long id) {
-        return getSession().createQuery(
-                    "SELECT B FROM Book AS B WHERE B.theme.id = :themeId",
-                    Book.class
-        ).setParameter("themeId", id).getResultList();
-    }
-
-    @Override
     public List<Book> findByIsTaken(Boolean isTaken) {
         return getSession().createQuery(
                 "SELECT B FROM Book AS B WHERE B.isTaken = :isTaken",
