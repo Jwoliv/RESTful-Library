@@ -1,7 +1,7 @@
-package com.example.RESTful.Library.dao.dao.user;
+package com.example.RESTful.Library.dao.impl.user;
 
-import com.example.RESTful.Library.dao.dao.AbstractDaoImpl;
-import com.example.RESTful.Library.dao.impl.user.UserDao;
+import com.example.RESTful.Library.dao.impl.AbstractDaoImpl;
+import com.example.RESTful.Library.dao.dao.user.UserDao;
 import com.example.RESTful.Library.model.user.User;
 import jakarta.persistence.NoResultException;
 import org.hibernate.SessionFactory;
@@ -21,7 +21,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     public List<User> findByName(String name) {
         try {
             return getSession().createQuery(
-                    "SELECT U FROM User AS U " + "WHERE UPPER(U.firstname) LIKE CONCAT('%', UPPER(:name), '%') OR UPPER(U.lastname) LIKE CONCAT('%', UPPER(:name), '%')",
+                    "SELECT U FROM User AS U WHERE UPPER(U.firstname) LIKE CONCAT('%', UPPER(:name), '%') OR UPPER(U.lastname) LIKE CONCAT('%', UPPER(:name), '%')",
                     User.class
             ).setParameter("name", name).getResultList();
         } catch (NoResultException e) {

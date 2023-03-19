@@ -1,6 +1,6 @@
-package com.example.RESTful.Library.dao.impl.book;
+package com.example.RESTful.Library.dao.dao.book;
 
-import com.example.RESTful.Library.dao.impl.AbstractDao;
+import com.example.RESTful.Library.dao.dao.AbstractDao;
 import com.example.RESTful.Library.model.book.Book;
 
 import java.util.List;

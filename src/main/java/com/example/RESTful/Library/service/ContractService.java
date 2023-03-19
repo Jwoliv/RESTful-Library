@@ -1,11 +1,11 @@
 package com.example.RESTful.Library.service;
 
-import com.example.RESTful.Library.dao.dao.ContractDaoImpl;
+import com.example.RESTful.Library.dao.impl.ContractDaoImpl;
 import com.example.RESTful.Library.model.Contract;
 import com.example.RESTful.Library.model.book.Book;
-import com.example.RESTful.Library.model.user.User;
 import com.example.RESTful.Library.service.book.BookService;
 import com.example.RESTful.Library.service.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,7 +15,9 @@ import java.util.List;
 public class ContractService extends AbstractService<Contract, ContractDaoImpl> {
     private final UserService userService;
     private final BookService bookService;
-    protected ContractService(ContractDaoImpl dao, UserService userService, BookService bookService) {
+
+    @Autowired
+    public ContractService(ContractDaoImpl dao, UserService userService, BookService bookService) {
         super(dao);
         this.userService = userService;
         this.bookService = bookService;
@@ -52,16 +54,9 @@ public class ContractService extends AbstractService<Contract, ContractDaoImpl> 
         if (contract != null) {
             Book book = contract.getBook();
             if (book != null) {
-                updateBookFieldsOnBorrow(contract, book);
+                bookService.updateBookFieldsOnBorrow(contract, book);
                 setContractFieldsOnBorrow(contract, book);
             }
-        }
-    }
-    public void updateBookFieldsOnBorrow(Contract contract, Book book) {
-        if (contract != null && book != null) {
-            book.setIsTaken(true);
-            book.setCurrentOwner(contract.getUser());
-            bookService.update(book);
         }
     }
     public void setContractFieldsOnBorrow(Contract contract, Book book) {
@@ -79,19 +74,6 @@ public class ContractService extends AbstractService<Contract, ContractDaoImpl> 
             return !maxDateOfReturned.isBefore(contract.getDateOfReturn());
         }
         return false;
-    }
-    public void removeBookAndContractAfterLost(Long id) {
-        Contract contract = findById(id);
-        if (contract != null && checkDateOfReturned(contract)) {
-            Book book = contract.getBook();
-            User user = contract.getUser();
-            if (user != null && book != null) {
-                user.setIsBanned(true);
-                userService.update(user);
-                delete(contract);
-                bookService.delete(book);
-            }
-        }
     }
     public void checkAvailabilityForDeleteContract(Long id) {
         Contract contract = findById(id);

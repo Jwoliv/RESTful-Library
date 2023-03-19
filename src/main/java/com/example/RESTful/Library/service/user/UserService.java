@@ -1,6 +1,6 @@
 package com.example.RESTful.Library.service.user;
 
-import com.example.RESTful.Library.dao.dao.user.UserDaoImpl;
+import com.example.RESTful.Library.dao.impl.user.UserDaoImpl;
 import com.example.RESTful.Library.model.Contract;
 import com.example.RESTful.Library.model.user.User;
 import com.example.RESTful.Library.service.AbstractService;

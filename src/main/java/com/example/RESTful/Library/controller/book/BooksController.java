@@ -1,7 +1,7 @@
 package com.example.RESTful.Library.controller.book;
 
 import com.example.RESTful.Library.controller.AbstractController;
-import com.example.RESTful.Library.dao.dao.book.BookDaoImpl;
+import com.example.RESTful.Library.dao.impl.book.BookDaoImpl;
 import com.example.RESTful.Library.model.book.Book;
 import com.example.RESTful.Library.service.book.BookService;
 import org.springframework.http.ResponseEntity;

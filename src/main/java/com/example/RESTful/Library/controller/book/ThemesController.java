@@ -1,7 +1,7 @@
 package com.example.RESTful.Library.controller.book;
 
 import com.example.RESTful.Library.controller.AbstractController;
-import com.example.RESTful.Library.dao.dao.book.ThemeDaoImpl;
+import com.example.RESTful.Library.dao.impl.book.ThemeDaoImpl;
 import com.example.RESTful.Library.model.book.Book;
 import com.example.RESTful.Library.model.book.Theme;
 import com.example.RESTful.Library.service.book.ThemeService;

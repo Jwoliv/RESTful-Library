@@ -1,6 +1,6 @@
-package com.example.RESTful.Library.dao.dao;
+package com.example.RESTful.Library.dao.impl;
 
-import com.example.RESTful.Library.dao.impl.AbstractDao;
+import com.example.RESTful.Library.dao.dao.AbstractDao;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

@@ -1,6 +1,6 @@
 package com.example.RESTful.Library.service;
 
-import com.example.RESTful.Library.dao.impl.AbstractDao;
+import com.example.RESTful.Library.dao.dao.AbstractDao;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

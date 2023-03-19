@@ -1,6 +1,6 @@
-package com.example.RESTful.Library.dao.dao;
+package com.example.RESTful.Library.dao.impl;
 
-import com.example.RESTful.Library.dao.impl.ContractDao;
+import com.example.RESTful.Library.dao.dao.ContractDao;
 import com.example.RESTful.Library.model.Contract;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;

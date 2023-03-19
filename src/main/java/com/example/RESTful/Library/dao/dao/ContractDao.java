@@ -1,4 +1,4 @@
-package com.example.RESTful.Library.dao.impl;
+package com.example.RESTful.Library.dao.dao;
 
 import com.example.RESTful.Library.model.Contract;
 

@@ -1,7 +1,7 @@
-package com.example.RESTful.Library.dao.dao.user;
+package com.example.RESTful.Library.dao.impl.user;
 
-import com.example.RESTful.Library.dao.dao.AbstractDaoImpl;
-import com.example.RESTful.Library.dao.impl.user.AuthorDao;
+import com.example.RESTful.Library.dao.impl.AbstractDaoImpl;
+import com.example.RESTful.Library.dao.dao.user.AuthorDao;
 import com.example.RESTful.Library.model.user.Author;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;

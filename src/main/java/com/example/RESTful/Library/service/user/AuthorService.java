@@ -1,6 +1,6 @@
 package com.example.RESTful.Library.service.user;
 
-import com.example.RESTful.Library.dao.dao.user.AuthorDaoImpl;
+import com.example.RESTful.Library.dao.impl.user.AuthorDaoImpl;
 import com.example.RESTful.Library.model.user.Author;
 import com.example.RESTful.Library.service.AbstractService;
 import org.springframework.stereotype.Service;

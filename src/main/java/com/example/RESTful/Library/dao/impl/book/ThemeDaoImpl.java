@@ -1,7 +1,7 @@
-package com.example.RESTful.Library.dao.dao.book;
+package com.example.RESTful.Library.dao.impl.book;
 
-import com.example.RESTful.Library.dao.dao.AbstractDaoImpl;
-import com.example.RESTful.Library.dao.impl.book.ThemeDao;
+import com.example.RESTful.Library.dao.impl.AbstractDaoImpl;
+import com.example.RESTful.Library.dao.dao.book.ThemeDao;
 import com.example.RESTful.Library.model.book.Theme;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;

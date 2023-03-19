@@ -1,6 +1,6 @@
 package com.example.RESTful.Library.controller;
 
-import com.example.RESTful.Library.dao.dao.AbstractDaoImpl;
+import com.example.RESTful.Library.dao.impl.AbstractDaoImpl;
 import com.example.RESTful.Library.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

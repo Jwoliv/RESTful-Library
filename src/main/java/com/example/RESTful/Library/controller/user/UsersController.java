@@ -1,7 +1,7 @@
 package com.example.RESTful.Library.controller.user;
 
 import com.example.RESTful.Library.controller.AbstractController;
-import com.example.RESTful.Library.dao.dao.user.UserDaoImpl;
+import com.example.RESTful.Library.dao.impl.user.UserDaoImpl;
 import com.example.RESTful.Library.model.Contract;
 import com.example.RESTful.Library.model.book.Book;
 import com.example.RESTful.Library.model.user.User;
