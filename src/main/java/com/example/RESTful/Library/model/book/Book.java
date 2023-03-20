@@ -5,10 +5,7 @@ import com.example.RESTful.Library.model.user.Author;
 import com.example.RESTful.Library.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;

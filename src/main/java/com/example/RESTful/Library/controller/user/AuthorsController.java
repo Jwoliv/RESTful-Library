@@ -6,10 +6,7 @@ import com.example.RESTful.Library.model.book.Book;
 import com.example.RESTful.Library.model.user.Author;
 import com.example.RESTful.Library.service.user.AuthorService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +19,9 @@ public class AuthorsController extends AbstractController<Author, AuthorDaoImpl,
     @GetMapping("/{id}/books")
     public ResponseEntity<List<Book>> booksOfAuthor(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id).getBooks());
+    }
+    @GetMapping("/search-by-name")
+    public ResponseEntity<List<Author>> searchUsersByName(@RequestParam String name) {
+        return ResponseEntity.ok(service.findByName(name));
     }
 }
