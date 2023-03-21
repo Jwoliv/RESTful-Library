@@ -4,12 +4,16 @@ import com.example.RESTful.Library.model.book.Book;
 import com.example.RESTful.Library.model.user.Author;
 import com.example.RESTful.Library.service.user.AuthorService;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -17,66 +21,62 @@ import static org.mockito.Mockito.when;
 class AuthorsControllerTest {
     @Mock
     private AuthorService authorService;
-
+    @InjectMocks
+    private AuthorsController authorsController;
     @Test
-    void booksOfTheAuthor_whenIsNotEmptyList() {
-        var books = List.of(new Book(), new Book(), new Book(), new Book());
+    void booksOfAuthor_whenIsNotEmpty() {
+        var booksOfTheAuthor = List.of(new Book(), new Book(), new Book());
         var author = new Author();
-        author.setBooks(books);
+        author.setBooks(booksOfTheAuthor);
 
         when(authorService.findById(1L)).thenReturn(author);
 
-        var resultAuthor = authorService.findById(1L);
-        var resultBooks = resultAuthor.getBooks();
+        var response = authorsController.booksOfAuthor(1L);
 
-        assertEquals(books.size(), resultBooks.size());
-        assertEquals(author, resultAuthor);
-        assertEquals(books, resultBooks);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertEquals(response.getBody(), booksOfTheAuthor);
+        assertEquals(Objects.requireNonNull(response.getBody()).size(), booksOfTheAuthor.size());
     }
+
     @Test
-    void booksOfTheAuthor_whenIsEmptyList() {
-        List<Book> books = List.of();
+    void booksOfAuthor_whenIsEmpty() {
         var author = new Author();
-        author.setBooks(books);
+        author.setBooks( new ArrayList<>());
 
         when(authorService.findById(1L)).thenReturn(author);
 
-        var resultAuthor = authorService.findById(1L);
-        var resultBooks = resultAuthor.getBooks();
+        var response = authorsController.booksOfAuthor(1L);
 
-        assertEquals(0, resultBooks.size());
-        assertEquals(author, resultAuthor);
-        assertEquals(books, resultBooks);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertEquals(response.getBody(), new ArrayList<>());
+        assertEquals(Objects.requireNonNull(response.getBody()).size(), 0);
     }
+
     @Test
-    void searchUsersByName_whenIsNotZeroResult() {
-        var nameRequest = "User";
-        var author1 = new Author();
-        author1.setId(1L);
-        author1.setFirstname("User");
-        author1.setLastname("Example");
+    void testSearchUsersByName_whenIsNotEmpty() {
+        var name = "John";
+        var user = new Author();
+        user.setId(1L);
+        user.setFirstname("John");
+        user.setLastname("Doe");
+        when(authorService.findByName(name)).thenReturn(List.of(user));
 
-        var author2 = new Author();
-        author1.setId(2L);
-        author1.setFirstname("Example1");
-        author1.setLastname("User1");
+        var response = authorsController.searchUsersByName(name);
 
-        var authors = List.of(author1, author2);
-
-        when(authorService.findByName(nameRequest)).thenReturn(authors);
-
-        var resultAuthors = authorService.findByName(nameRequest);
-        assertEquals(authors.size(), resultAuthors.size());
-        assertEquals(authors, resultAuthors);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertEquals(response.getBody(), List.of(user));
+        assertEquals(Objects.requireNonNull(response.getBody()).size(), List.of(user).size());
     }
-    @Test
-    void searchUsersByName_whenIsZeroResult() {
-        var nameRequest = "User";
-        List<Author> authors = new ArrayList<>();
-        when(authorService.findByName(nameRequest)).thenReturn(authors);
 
-        var resultAuthors = authorService.findByName(nameRequest);
-        assertEquals(0, resultAuthors.size());
-        assertEquals(authors, resultAuthors);
+    @Test
+    void testSearchUsersByName_whenIsEmpty() {
+        var name = "John";
+        when(authorService.findByName(name)).thenReturn(new ArrayList<>());
+
+        var response = authorsController.searchUsersByName(name);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertEquals(response.getBody(), new ArrayList<>());
+        assertEquals(Objects.requireNonNull(response.getBody()).size(),0);
     }
 }
