@@ -5,7 +5,8 @@
 ### Technologies
 * Java
 * Maven
-* Spring: Core, MVC
+* PostgreSQL
+* Spring: Core, MVC, Boot
 * Mockito
 * JUnit5
 
