@@ -27,7 +27,7 @@ This application helps manage the library. By using this app, we can accomplish 
 Usage
 You need to clone this repository
 ```
-git clone https://github.com/Jwoliv/WriteHere.git
+git clone https://github.com/Jwoliv/RESTful-Library.git
 ```
 Launch the maven
 ```
