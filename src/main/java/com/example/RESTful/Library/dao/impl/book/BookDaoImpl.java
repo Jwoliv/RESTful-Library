@@ -23,4 +23,12 @@ public class BookDaoImpl extends AbstractDaoImpl<Book> implements BookDao {
                 Book.class
         ).setParameter("isTaken", isTaken).getResultList();
     }
+
+    @Override
+    public List<Book> findByIsAvailiable(Boolean isAvailiable) {
+        return getSession().createQuery(
+                "SELECT B FROM Book AS B WHERE B.isAvailiable = :isAvailiable",
+                Book.class
+        ).setParameter("isAvailiable", isAvailiable).getResultList();
+    }
 }

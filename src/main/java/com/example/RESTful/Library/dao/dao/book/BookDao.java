@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface BookDao extends AbstractDao<Book> {
     List<Book> findByIsTaken(Boolean isTaken);
+    List<Book> findByIsAvailiable(Boolean isAvailiable);
 }

@@ -28,6 +28,9 @@ public class BookService extends AbstractService<Book, BookDaoImpl> {
             getDao().delete(book);
         }
     }
+    public List<Book> findIsAvailiable(Boolean isAvailable) {
+        return getDao().findByIsAvailiable(isAvailable);
+    }
     public List<Book> findByIsTaken(Boolean isTaken) {
         return getDao().findByIsTaken(isTaken);
     }

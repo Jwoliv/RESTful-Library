@@ -28,4 +28,16 @@ public class BooksController extends AbstractController<Book, BookDaoImpl, BookS
     public ResponseEntity<List<Book>> booksTaken(@RequestParam String isTaken) {
         return ResponseEntity.ok(service.findByIsTaken(Boolean.valueOf(isTaken)));
     }
+    @GetMapping("/status-of-available")
+    public ResponseEntity<List<Book>> availableBooks(@RequestParam String isTaken) {
+        return ResponseEntity.ok(service.findByIsTaken(Boolean.valueOf(isTaken)));
+    }
+    @GetMapping("/is-taken")
+    public ResponseEntity<List<Book>> booksTaken() {
+        return ResponseEntity.ok(service.findByIsTaken(true));
+    }
+    @GetMapping("/is-availiable")
+    public ResponseEntity<List<Book>> availableBooks() {
+        return ResponseEntity.ok(service.findIsAvailiable(true));
+    }
 }
