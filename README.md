@@ -3,12 +3,12 @@
 ----
 
 ### Technologies
-* Java
-* Maven
-* PostgreSQL
-* Spring: Core, MVC, Boot
-* Mockito
-* JUnit5
+:closed_book:  Java <br>
+:closed_book:  Maven <br>
+:closed_book:  PostgreSQL <br>
+:closed_book:  Spring: Core, MVC, Boot <br>
+:closed_book:  Mockito <br>
+:closed_book:  JUnit5 <br>
 
 ---
 ### What is this application?
@@ -24,6 +24,7 @@ This application helps manage the library. By using this app, we can accomplish 
 * Mark books as lost
 * Extend the term of the contract
 ---
+
 Usage
 You need to clone this repository
 ```
@@ -35,7 +36,7 @@ mvn clean install
 ```
 Open the postman and created the templates of the request with correct url
 #### Example of the url and json object
-* Request for create a new user
+:loudspeaker: Request for create a new user
 
 ```POST```
 ```
@@ -43,16 +44,16 @@ Open the postman and created the templates of the request with correct url
 ```
 ```json
 {
-    "firstname": "UserFirstname1",
-    "lastname": "UserLastname1",
-    "surname": "UserSurname1",
+    "firstname": "John",
+    "lastname": "Doe",
+    "surname": "Adams",
     "email": "test@gmail.com",
     "numberOfOverdue": 0,
     "isBanned": false,
-    "numberPhone": "+380984454286"
+    "numberPhone": "+380983381762"
 }
 ```
-* Request for create a new author
+:loudspeaker: Request for create a new author
 
 ```POST```
 ```
@@ -60,13 +61,13 @@ Open the postman and created the templates of the request with correct url
 ```
 ```json
 {
-    "firstname": "Firstname1",
-    "lastname": "Lastname1",
-    "surname": "Surname1",
+    "firstname": "AuthorFirstName",
+    "lastname": "AuthorLastName",
+    "surname": "AuthorSurname",
     "books": []
 }
 ```
-* Request for create a new theme
+:loudspeaker: Request for create a new theme
 
 ```POST```
 ```
@@ -78,7 +79,7 @@ Open the postman and created the templates of the request with correct url
     "books": []
 }
 ```
-* Request for create a new book
+:loudspeaker: Request for create a new book
 
 ```POST```
 ```
@@ -93,9 +94,9 @@ Open the postman and created the templates of the request with correct url
     "rating": 4.5,
     "author": {
         "id": 2,
-        "firstname": "Firstname1",
-        "lastname": "Lastname1",
-        "surname": "Surname1"
+        "firstname": "AuthorFirstName",
+        "lastname": "AuthorLastName",
+        "surname": "AuthorSurname"
     },
     "theme": {
         "id": 1,
