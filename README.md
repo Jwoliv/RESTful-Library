@@ -6,6 +6,7 @@
 :closed_book:  Java <br>
 :closed_book:  Maven <br>
 :closed_book:  PostgreSQL <br>
+:closed_book:  Hibernate <br>
 :closed_book:  Spring: Core, MVC, Boot <br>
 :closed_book:  Mockito <br>
 :closed_book:  JUnit5 <br>
